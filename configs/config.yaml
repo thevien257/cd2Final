@@ -1,0 +1,36 @@
+# ===== CẤU HÌNH DỰ ÁN: Tối ưu Định tuyến Đa luồng & Phân bổ Công suất =====
+# Tất cả thành viên nhóm sử dụng chung file này.
+
+seed: 42
+
+network:
+  num_nodes: 30          # N: Số đỉnh đồ thị
+  edge_prob: 0.25        # Xác suất sinh cạnh (Erdős–Rényi)
+  weight_min: 1.0        # Trọng số cạnh tối thiểu
+  weight_max: 10.0       # Trọng số cạnh tối đa
+
+flows:
+  num_flows: 4           # M: Số luồng dữ liệu (bắt đầu nhỏ để chạy Exhaustive)
+  num_paths: 3           # K: Số tuyến ứng viên mỗi luồng
+
+optimization:
+  P_max: 10.0            # Tổng ngân sách công suất phát
+  beta: 0.5              # Hệ số phạt mức dùng chung cạnh
+  tolerance: 1.0e-8      # Ngưỡng dừng Bisection
+  max_iter: 100          # Số vòng lặp tối đa Bisection
+
+ml:
+  hidden_dims: [128, 64] # Số nơ-ron các lớp ẩn MLP
+  learning_rate: 0.001
+  num_epochs: 200
+  batch_size: 32
+  num_candidates: 10     # L: Số cấu hình ứng viên sinh từ MLP
+  dropout: 0.1
+
+experiment:
+  num_train_instances: 500   # Số kịch bản mạng để huấn luyện
+  num_val_instances: 100     # Số kịch bản mạng để validation
+  num_test_instances: 100    # Số kịch bản mạng để kiểm thử
+  w_min: 0.5                 # Trọng số ưu tiên luồng tối thiểu
+  w_max: 2.0                 # Trọng số ưu tiên luồng tối đa
+  gain_noise_std: 0.3        # Độ lệch chuẩn nhiễu log-normal cho độ lợi kênh
